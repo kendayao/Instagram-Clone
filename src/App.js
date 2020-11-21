@@ -21,14 +21,15 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 350,
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: '1px solid #dbdbdb',
+    borderRadius: '3px',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    outline: "none"
   },
 }));
-
 
 
 
@@ -83,9 +84,9 @@ function App() {
   
   console.log(user)
   return (
+
     <div className="app">
       <Modal
-      className="app__modal"
         open={open}
         // on close listens to clicks outside the modal. materialize built that for us
         onClose={()=>setOpen(false)}
@@ -93,14 +94,14 @@ function App() {
          <div style={modalStyle} className={classes.paper}>
            <form className="app__signup">
             <center>
-              <img className="app__header-imageModal" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
+              <img className="app__header-imageModal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/800px-Instagram_logo.svg.png" alt="instagram logo" />
               
             </center>
             <center>
             <img className="app__header-iconModal" src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-new-circle-512.png" alt="instagram logo" />
             </center>
             
-            <Input 
+            <Input
                 className="app__input"
                 placeholder='username'
                 type='username'
@@ -124,7 +125,7 @@ function App() {
                 onChange={event=>setPassword(event.target.value)}
                 required
               />
-              <Button type="submit" onClick={signUp}>Sign Up</Button>
+              <button className="app__modal-button" type="submit" onClick={signUp}>Sign Up</button>
            </form>
          </div>
       </Modal>
@@ -133,18 +134,14 @@ function App() {
       <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
      </div>
 
-    {user?<Button onClick={()=>auth.signOut()}>Logout</Button>:
+    {user?<Button classe onClick={()=>auth.signOut()}>Logout</Button>:
     <Button onClick={()=>setOpen(true)}>Sign Up</Button>
-    
     }
 
     {posts.map(({id, post})=>(
       <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
     ))}
     
-  
-
-
     </div>
   );
 }
