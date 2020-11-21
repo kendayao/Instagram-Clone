@@ -6,7 +6,6 @@ import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Input } from '@material-ui/core';
 
-
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -31,13 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function App() {
   const classes=useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [posts, setPosts]=useState([]);
   const [open, setOpen]=useState(false);
+  const [openSignIn, setOpenSignIn]=useState(false)
   const [username, setUsername]=useState('');
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
@@ -79,7 +77,19 @@ function App() {
         displayName:username,
       })
     })
-    .catch((error)=>console.log(error.message))
+    .catch((error)=>alert(error.message))
+    setUsername('')
+    setEmail('')
+    setPassword('')
+    setOpen(false)
+  }
+
+  function signIn(event){
+    event.preventDefault();
+    auth.signInWithEmailAndPassword(email, password).catch((error)=>alert(error.message))
+    setEmail('')
+    setPassword('')
+    setOpenSignIn(false)
   }
   
   console.log(user)
@@ -130,12 +140,55 @@ function App() {
          </div>
       </Modal>
 
+
+      <Modal
+        open={openSignIn}
+        // on close listens to clicks outside the modal. materialize built that for us
+        onClose={()=>setOpenSignIn(false)}
+      >
+         <div style={modalStyle} className={classes.paper}>
+           <form className="app__signup">
+            <center>
+              <img className="app__header-imageModal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/800px-Instagram_logo.svg.png" alt="instagram logo" />
+              
+            </center>
+            <center>
+            <img className="app__header-iconModal" src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-new-circle-512.png" alt="instagram logo" />
+            </center>
+            
+              <Input
+                className="app__input" 
+                placeholder='email'
+                type='email'
+                value={email}
+                onChange={event=>setEmail(event.target.value)}
+                required
+              />
+              <Input
+                className="app__input" 
+                placeholder='password'
+                type='password'
+                value={password}
+                onChange={event=>setPassword(event.target.value)}
+                required
+              />
+              <button className="app__modal-button" type="submit" onClick={signIn}>Sign In</button>
+           </form>
+         </div>
+      </Modal>
+
       <div className="app__header">
       <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
      </div>
 
     {user?<Button classe onClick={()=>auth.signOut()}>Logout</Button>:
-    <Button onClick={()=>setOpen(true)}>Sign Up</Button>
+    <div className="app__loginContainer">
+      <Button onClick={()=>setOpenSignIn(true)}>Sign In</Button>
+      <Button onClick={()=>setOpen(true)}>Sign Up</Button>
+    </div>
+    
+
+
     }
 
     {posts.map(({id, post})=>(
