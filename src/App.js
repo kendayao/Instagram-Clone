@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import ImageUpload from './image-upload/ImageUpload'
 import Post from './post/Post';
 import {db, auth} from './firebase/firebase'
 import Modal from '@material-ui/core/Modal'
@@ -94,7 +95,7 @@ function App() {
   
   console.log(user)
   return (
-
+   
     <div className="app">
       <Modal
         open={open}
@@ -176,7 +177,7 @@ function App() {
            </form>
          </div>
       </Modal>
-
+      <ImageUpload/>
       <div className="app__header">
       <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
      </div>
