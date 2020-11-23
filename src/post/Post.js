@@ -38,7 +38,7 @@ function Post({username, user, postId, caption, imageUrl}){
         })
         setComment('')
     }
-
+ 
     return (
         <div className="post">
             <div className="post__header">
@@ -49,7 +49,7 @@ function Post({username, user, postId, caption, imageUrl}){
                 />
                 <h3>{username}</h3>
             </div>
-            <img className="post__image" src={imageUrl} />
+            <img className="post__image" src={imageUrl} alt="post display" />
             <h4 className="post__text"><strong>{username}:</strong> {caption}</h4>
 
             <div className="post__comments">
@@ -60,24 +60,27 @@ function Post({username, user, postId, caption, imageUrl}){
             ))}
             </div>
 
-            <form className="post__form">
-                <input
-                className="post__input"
-                type="text"
-                placeholder="Add a comment..."
-                value={comment}
-                onChange={event=>setComment(event.target.value)}
-                >
-                </input>
-                <button
-                className="post__button"
-                // if there is no comment, button is disabled
-                disabled={!comment}
-                type="submit"
-                onClick={postComment}
-                >Post
+            {user&& 
+                <form className="post__form">
+                    <input
+                    className="post__input"
+                    type="text"
+                    placeholder="Add a comment..."
+                    value={comment}
+                    onChange={event=>setComment(event.target.value)}
+                    >
+                    </input>
+                    <button
+                    className="post__button"
+                    // if there is no comment, button is disabled
+                    disabled={!comment}
+                    type="submit"
+                    onClick={postComment}
+                    >Post
                 </button>
             </form>
+            }
+            
         </div>
        
     )
