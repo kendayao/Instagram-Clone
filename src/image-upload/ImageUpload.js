@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
+import firebase from 'firebase';
 import {storage, db} from '../firebase/firebase'
 import './ImageUpload.css'
 
 
-function ImageUpload(){
+function ImageUpload({username}){
     const [image, setImage]=useState(null)
     const [progress, setProgress]=useState(0)
     const [caption, setCaption]=useState('')
@@ -31,6 +32,20 @@ function ImageUpload(){
             // upload completes this is what happens
                 ()=>{
                     storage.ref("images").child(image.name).getDownloadURL()
+                    .then(url=>{
+                        // post image and caption to inside db
+                        db.collection("posts").add({
+                            // get server timestamp
+                            timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+                            caption: caption,
+                            imageUrl: url,
+                            username: username
+                        })
+                        setProgress(0);
+                        setCaption('');
+                        setImage(null);
+                        
+                    })
                 }
 
         )
@@ -38,7 +53,8 @@ function ImageUpload(){
 
 
     return(
-        <div>
+        <div className="image-upload">
+            <progress className="image-upload-progress" value={progress} max='100'/>
             <input type="text" placeholder="Enter a caption..." onChange={(event)=>setCaption(event.target.value)} value={caption} />
             <input type="file" onChange={handleChange} />
             <button onClick={handleUpload}>Upload</button>

@@ -61,7 +61,7 @@ function App() {
   },[user, username])
 
   useEffect(()=>{
-    db.collection('posts').onSnapshot(snapshot=>{
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot=>{
       setPosts(snapshot.docs.map(doc=>({
         id: doc.id,
         post:doc.data()
@@ -177,27 +177,33 @@ function App() {
            </form>
          </div>
       </Modal>
-      <ImageUpload/>
+
+      
+
       <div className="app__header">
       <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
+      {user?<Button classe onClick={()=>auth.signOut()}>Logout</Button>:
+      <div className="app__loginContainer">
+        <Button onClick={()=>setOpenSignIn(true)}>Sign In</Button>
+        <Button onClick={()=>setOpen(true)}>Sign Up</Button>
+      </div>
+    }
      </div>
 
-    {user?<Button classe onClick={()=>auth.signOut()}>Logout</Button>:
-    <div className="app__loginContainer">
-      <Button onClick={()=>setOpenSignIn(true)}>Sign In</Button>
-      <Button onClick={()=>setOpen(true)}>Sign Up</Button>
-    </div>
-    
-
-
-    }
-
+    <div className="app__posts">
     {posts.map(({id, post})=>(
-      <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+      <Post key={id} user={user} postId={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
     ))}
+    </div>
+
     
+    {user?.displayName?(
+    <ImageUpload username={user.displayName}/>):
+      (<h3>Login to Upload</h3>)}
     </div>
   );
+
+ 
 }
 
 export default App;

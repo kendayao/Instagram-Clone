@@ -12,6 +12,12 @@
   padding: 20px;
   border-bottom: 1px solid lightgray;
   object-fit: contain;
+  display: flex;
+  justify-content: space-between;
+}
+
+.app__headerImage {
+  object-fit: contain;
 }
 
 .app__signup {
@@ -58,4 +64,8 @@
   margin-right: 7.5%;
   margin-top: 10px;
   border: none;
+}
+
+.app__posts {
+  padding: 20px;
 }
