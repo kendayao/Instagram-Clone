@@ -25,6 +25,11 @@
   border: 1px solid black;
 }
 
+.image-upload-text,
+.image-upload-button {
+  outline: none;
+}
+
 .image-upload-file {
   margin-bottom: 20px;
 }

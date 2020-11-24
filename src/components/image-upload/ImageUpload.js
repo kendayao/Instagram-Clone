@@ -52,7 +52,7 @@ function ImageUpload({username}){
 
         )
             }else{
-                alert("image and caption is required")
+                alert("An image and a caption is required")
             }
     }
 

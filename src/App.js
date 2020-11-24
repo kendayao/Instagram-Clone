@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import ImageUpload from './image-upload/ImageUpload'
+import ImageUpload from './components/image-upload/ImageUpload'
 import Post from './components/post/Post';
 import {db, auth} from './firebase/firebase'
 import Modal from '@material-ui/core/Modal'
@@ -60,7 +60,7 @@ function App() {
     return()=>{
       unsubscribe();
     }
-  },[user])
+  },[])
 
   useEffect(()=>{
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot=>{
@@ -70,7 +70,7 @@ function App() {
         
       })));
     })
-  },[posts])
+  },[])
   
   function signUp(event){
     event.preventDefault();
