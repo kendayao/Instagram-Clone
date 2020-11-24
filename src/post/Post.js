@@ -3,12 +3,41 @@ import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 import {db} from '../firebase/firebase';
 import firebase from 'firebase';
+import Modal from '@material-ui/core/Modal'
+import { makeStyles } from '@material-ui/core/styles';
+
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
+  
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      width: 350,
+      backgroundColor: theme.palette.background.paper,
+      border: '1px solid #dbdbdb',
+      borderRadius: '8px',
+      boxShadow: theme.shadows[5],
+      outline: "none"
+    },
+  }));
 
 function Post({username, user, postId, caption, imageUrl}){
 
+    const [modalStyle] = React.useState(getModalStyle);
+    const classes=useStyles();
     const [comments, setComments]=useState([])
     const [comment, setComment]=useState('')
     const [likes, setLikes]=useState([])
+    const [openLikesModal, setOpenLikesModal]=useState(false)
+   
 
     useEffect(()=>{
         let unsubscribe;
@@ -36,11 +65,11 @@ function Post({username, user, postId, caption, imageUrl}){
         return()=>{
             unsubscribe();
         }
-   
     }, [postId]);
 
-
-
+    
+        
+   
     const postComment=(event)=>{
         event.preventDefault();
 
@@ -58,12 +87,54 @@ function Post({username, user, postId, caption, imageUrl}){
         })
     }
 
-  
-console.log(likes)
-    const likeCount=likes.length-1
+    const handleUnlike=()=>{
+        db.collection("posts").doc(postId).collection("likes").where("likeUser", "==", user.displayName)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            doc.ref.delete();
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    }
 
+    
+
+
+
+
+    
+    const likeCount=likes.length-1
     return (
         <div className="post">
+            <Modal
+                open={openLikesModal}
+                // on close listens to clicks outside the modal. materialize built that for us
+                onClose={()=>setOpenLikesModal(false)}
+                >
+                <div style={modalStyle} className={classes.paper}>
+                    <div className="post__modal-header">
+                        <h3>Likes</h3>
+                    </div>
+                    <div className="post__modal-body">
+                        {likes.map(likeItem=>{
+                            return <div key={likeItem.likeUser} className="post__modal-body-item" >
+                            <Avatar 
+                            className="post__avatar-modal"
+                            alt={likeItem.likeUser.toUpperCase()}
+                            src="/static/images/avatar/1.jpg"
+                            />
+                            <p className="post__modal-body-name">{likeItem.likeUser}</p></div>
+                        })}
+                    </div>
+                </div>
+            </Modal>
+
+
+
             <div className="post__header">
                 <Avatar 
                     className="post__avatar"
@@ -75,24 +146,16 @@ console.log(likes)
             <img className="post__image" src={imageUrl} alt="post display" />
 
 
-           
             {user?
-            <div className="post__likes"><i onClick={handleLike}  className={likes.some(like=>like['likeUser']===user.displayName)? "fas fa-heart fa-lg":"far fa-heart fa-lg" } ></i> {likes.length>=1? likes[0].likeUser+" and "+ likeCount +" others" : likes.length+" likes" }</div>:
+            <div className="post__likes"><i onClick={(likes.some(like=>like['likeUser']===user.displayName))?handleUnlike:handleLike}  className={likes.some(like=>like['likeUser']===user.displayName)? "fas fa-heart fa-lg":"far fa-heart fa-lg" } ></i> {likes.length>=1? <p className="post__like-text">liked by <strong>{likes[0].likeUser}</strong> and <strong onClick={()=>setOpenLikesModal(true)} className="post___like-click">{likeCount} others</strong></p> : likes.length+" likes" }</div>:
             <div className="post__likes"><i className="far fa-heart fa-lg"></i> {likes.length} likes</div>
             }
             
-           
-            
-
-
-
-
-
             <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
 
             <div className="post__comments">
             {comments.map(commentItem=>(
-                <p key={commentItem.id} className='post__comments-comment'>
+                <p key={commentItem.timestamp} className='post__comments-comment'>
                     <strong>{commentItem.username}</strong> {commentItem.text}
                 </p>
             ))}

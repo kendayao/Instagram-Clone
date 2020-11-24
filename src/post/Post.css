@@ -63,3 +63,33 @@
   color: #6082ac;
   background-color: transparent;
 }
+
+.post__like-text {
+  font-weight: 400;
+  display: inline-block;
+}
+
+.post___like-click:hover {
+  cursor: pointer;
+}
+
+.post__modal-body {
+  padding-left: 25px;
+  padding-bottom: 25px;
+}
+
+.post__modal-body-item {
+  display: flex;
+  margin-top: 15px;
+}
+
+.post__modal-body-name {
+  padding: 10px;
+}
+
+.post__modal-header {
+  border-bottom: 1px solid rgba(211, 211, 211, 0.66);
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
