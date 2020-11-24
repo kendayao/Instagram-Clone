@@ -1,6 +1,5 @@
 .post {
   background-color: white;
-  max-width: 500px;
   border: 1px solid lightgray;
   margin-bottom: 45px;
 }
@@ -27,9 +26,22 @@
   margin-right: 10px;
 }
 
+.post__likes {
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.fas {
+  color: rgb(255, 60, 93);
+}
+
 .post__comments {
   padding-left: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.post__comments-comment {
+  margin-bottom: 5px;
 }
 
 .post__form {

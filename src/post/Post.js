@@ -8,6 +8,7 @@ function Post({username, user, postId, caption, imageUrl}){
 
     const [comments, setComments]=useState([])
     const [comment, setComment]=useState('')
+    const [likes, setLikes]=useState([])
 
     useEffect(()=>{
         let unsubscribe;
@@ -22,11 +23,23 @@ function Post({username, user, postId, caption, imageUrl}){
         ))
         }
 
+        if(postId){
+            unsubscribe=db
+            .collection("posts")
+            .doc(postId)
+            .collection("likes")
+            .onSnapshot((snapshot)=>(
+                setLikes(snapshot.docs.map((doc)=>doc.data()))
+            ))
+            }
+
         return()=>{
             unsubscribe();
         }
    
     }, [postId]);
+
+
 
     const postComment=(event)=>{
         event.preventDefault();
@@ -38,7 +51,17 @@ function Post({username, user, postId, caption, imageUrl}){
         })
         setComment('')
     }
- 
+
+    const handleLike=()=>{
+        db.collection("posts").doc(postId).collection("likes").add({
+            likeUser: user.displayName
+        })
+    }
+
+  
+console.log(likes)
+    const likeCount=likes.length-1
+
     return (
         <div className="post">
             <div className="post__header">
@@ -50,12 +73,27 @@ function Post({username, user, postId, caption, imageUrl}){
                 <h3>{username}</h3>
             </div>
             <img className="post__image" src={imageUrl} alt="post display" />
-            <h4 className="post__text"><strong>{username}:</strong> {caption}</h4>
+
+
+           
+            {user?
+            <div className="post__likes"><i onClick={handleLike}  className={likes.some(like=>like['likeUser']===user.displayName)? "fas fa-heart fa-lg":"far fa-heart fa-lg" } ></i> {likes.length>=1? likes[0].likeUser+" and "+ likeCount +" others" : likes.length+" likes" }</div>:
+            <div className="post__likes"><i className="far fa-heart fa-lg"></i> {likes.length} likes</div>
+            }
+            
+           
+            
+
+
+
+
+
+            <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
 
             <div className="post__comments">
             {comments.map(commentItem=>(
-                <p key={commentItem.id}>
-                    <strong>{commentItem.username}:</strong> {commentItem.text}
+                <p key={commentItem.id} className='post__comments-comment'>
+                    <strong>{commentItem.username}</strong> {commentItem.text}
                 </p>
             ))}
             </div>
