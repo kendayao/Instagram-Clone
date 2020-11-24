@@ -1,0 +1,29 @@
+.dropdown {
+  position: absolute;
+  width: 150px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgba(var(--d87, 255, 255, 255), 1);
+  top: 70px;
+  right: 20px;
+  z-index: 5;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid rgba(194, 194, 194, 0.44);
+}
+
+.dropdown__header {
+  padding-top: 10px;
+  font-weight: 600;
+}
+
+.dropdown__body {
+  margin-top: 15px;
+}
+
+.dropdown__footer {
+  border-top: 1px solid rgba(211, 211, 211, 0.66);
+  margin-top: 15px;
+}

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import ImageUpload from './image-upload/ImageUpload'
+import DropdownMenu from './dropdown-menu/DropdownMenu'
 import Post from './post/Post';
 import {db, auth} from './firebase/firebase'
 import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Input } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 
 function getModalStyle() {
   const top = 50;
@@ -41,6 +43,7 @@ function App() {
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
   const [user, setUser]=useState(null)
+  const [dropdown, setDropdown]=useState(false)
 
   useEffect(()=>{
     const unsubscribe=auth.onAuthStateChanged((authUser)=>{
@@ -182,12 +185,24 @@ function App() {
 
       <div className="app__header">
       <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
-      {user?<Button onClick={()=>auth.signOut()}>Logout</Button>:
+      {user?<Avatar 
+              onClick={()=>setDropdown(true)}
+              className="post__avatar"
+              alt={user.displayName.toUpperCase()}
+              src="/static/images/avatar/1.jpg"
+              />:
       <div className="app__loginContainer">
         <Button onClick={()=>setOpenSignIn(true)}>Sign In</Button>
         <Button onClick={()=>setOpen(true)}>Sign Up</Button>
       </div>
     }
+        {dropdown? <div className="dropdown">
+            <p className="dropdown__header">{username}</p>
+            <div className="dropdown__body"><i class="far fa-plus-square"></i> Add Photo</div>
+            <div className="dropdown__footer">
+                <Button onClick={()=>{auth.signOut(); setDropdown(false);}}>LogOut</Button>
+            </div>
+        </div>: null}
      </div>
 
     <div className="app__posts">
@@ -196,6 +211,7 @@ function App() {
     ))}
     </div>
 
+    
     
     {user?.displayName?(
     <ImageUpload username={user.displayName}/>):
