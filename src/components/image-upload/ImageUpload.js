@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import firebase from 'firebase';
-import {storage, db} from '../firebase/firebase'
+import {storage, db} from '../../firebase/firebase'
 import './ImageUpload.css'
 
 

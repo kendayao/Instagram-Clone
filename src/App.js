@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import ImageUpload from './image-upload/ImageUpload'
-import Post from './post/Post';
+import Post from './components/post/Post';
 import {db, auth} from './firebase/firebase'
 import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +49,6 @@ function App() {
     const unsubscribe=auth.onAuthStateChanged((authUser)=>{
       if(authUser){
         // user has logged in
-        console.log(authUser)
         setUser(authUser);
       }else{
         // user has logged out
@@ -61,7 +60,7 @@ function App() {
     return()=>{
       unsubscribe();
     }
-  },[user, username])
+  },[user])
 
   useEffect(()=>{
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot=>{
@@ -71,7 +70,7 @@ function App() {
         
       })));
     })
-  },[])
+  },[posts])
   
   function signUp(event){
     event.preventDefault();
@@ -114,6 +113,8 @@ function App() {
             <center>
             <img className="app__header-iconModal" src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-new-circle-512.png" alt="instagram logo" />
             </center>
+
+            <center className="app__header-subtitle">Sign up to post pictures, write comments, and like photos.</center>
             
             <Input
                 className="app__input"
@@ -158,6 +159,8 @@ function App() {
             <center>
             <img className="app__header-iconModal" src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-new-circle-512.png" alt="instagram logo" />
             </center>
+
+            <center className="app__header-subtitle">Sign in to post pictures, write comments, and like photos.</center>
               <Input
                 className="app__input" 
                 placeholder='email'

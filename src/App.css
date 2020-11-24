@@ -39,8 +39,16 @@
 .app__header-iconModal {
   width: 55px;
   height: 55px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   object-fit: contain;
+}
+
+.app__header-subtitle {
+  color: rgba(var(--f52, 142, 142, 142), 1);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 20px;
+  margin-bottom: 20px;
 }
 
 .app__header-imageModal {
