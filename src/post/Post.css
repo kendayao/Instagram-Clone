@@ -2,6 +2,7 @@
   background-color: white;
   border: 1px solid lightgray;
   margin-bottom: 45px;
+  border-radius: 3px;
 }
 
 .post__image {
@@ -52,16 +53,36 @@
 .post__input {
   flex: 1;
   border: none;
-  padding: 10px;
+  padding: 15px;
   border-top: 1px solid lightgray;
+  font-size: 14px;
+}
+
+.post__input {
+  outline: none;
 }
 
 .post__button {
   flex: 0;
+  padding: 15px;
   border: none;
   border-top: 1px solid lightgray;
   color: #6082ac;
   background-color: transparent;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.post__button-dark {
+  flex: 0;
+  padding: 15px;
+  border: none;
+  border-top: 1px solid lightgray;
+  color: rgba(var(--d69, 0, 149, 246), 1);
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .post__like-text {

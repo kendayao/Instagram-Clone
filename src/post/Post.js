@@ -172,7 +172,7 @@ function Post({username, user, postId, caption, imageUrl}){
                     >
                     </input>
                     <button
-                    className="post__button"
+                    className={comment?"post__button-dark":"post__button"}
                     // if there is no comment, button is disabled
                     disabled={!comment}
                     type="submit"

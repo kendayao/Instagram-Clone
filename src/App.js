@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import ImageUpload from './image-upload/ImageUpload'
-import DropdownMenu from './dropdown-menu/DropdownMenu'
 import Post from './post/Post';
 import {db, auth} from './firebase/firebase'
 import Modal from '@material-ui/core/Modal'
@@ -39,6 +38,7 @@ function App() {
   const [posts, setPosts]=useState([]);
   const [open, setOpen]=useState(false);
   const [openSignIn, setOpenSignIn]=useState(false)
+  const [openAddPhoto, setOpenAddPhoto]=useState(false)
   const [username, setUsername]=useState('');
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
@@ -144,7 +144,6 @@ function App() {
          </div>
       </Modal>
 
-
       <Modal
         open={openSignIn}
         // on close listens to clicks outside the modal. materialize built that for us
@@ -159,7 +158,6 @@ function App() {
             <center>
             <img className="app__header-iconModal" src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-new-circle-512.png" alt="instagram logo" />
             </center>
-            
               <Input
                 className="app__input" 
                 placeholder='email'
@@ -181,12 +179,25 @@ function App() {
          </div>
       </Modal>
 
+      <Modal
+        className="test"
+        open={openAddPhoto}
+        // on close listens to clicks outside the modal. materialize built that for us
+        onClose={()=>setOpenAddPhoto(false)}
+      >
+         <div style={modalStyle} className={classes.paper}>
+           <div className="app__addPhoto-modal">
+           <ImageUpload username={user?.displayName}/>
+           </div>
+         </div>
+      </Modal>
+
       
 
       <div className="app__header">
       <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram logo" />
       {user?<Avatar 
-              onClick={()=>setDropdown(true)}
+              onClick={()=>setDropdown(!dropdown)}
               className="post__avatar"
               alt={user.displayName.toUpperCase()}
               src="/static/images/avatar/1.jpg"
@@ -197,8 +208,8 @@ function App() {
       </div>
     }
         {dropdown? <div className="dropdown">
-            <p className="dropdown__header">{username}</p>
-            <div className="dropdown__body"><i class="far fa-plus-square"></i> Add Photo</div>
+            <p className="dropdown__header">{user.displayName}</p>
+            <div className="dropdown__body" onClick={()=>{setOpenAddPhoto(true); setDropdown(false);}}><i class="far fa-plus-square"></i> Add Photo</div>
             <div className="dropdown__footer">
                 <Button onClick={()=>{auth.signOut(); setDropdown(false);}}>LogOut</Button>
             </div>
@@ -211,11 +222,7 @@ function App() {
     ))}
     </div>
 
-    
-    
-    {user?.displayName?(
-    <ImageUpload username={user.displayName}/>):
-      (<h3>Login to Upload</h3>)}
+  
     </div>
   );
 

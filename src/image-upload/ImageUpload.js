@@ -15,8 +15,10 @@ function ImageUpload({username}){
         }
     }
 
+    
     const handleUpload=()=>{
-        const uploadTask=storage.ref(`images/${image.name}`).put(image)
+        if(image && caption){
+        const uploadTask=storage.ref(`images/${image?.name}`).put(image)
         uploadTask.on(
             "state_changed",
             (snapshot)=>{
@@ -31,7 +33,7 @@ function ImageUpload({username}){
             },
             // upload completes this is what happens
                 ()=>{
-                    storage.ref("images").child(image.name).getDownloadURL()
+                    storage.ref("images").child(image?.name).getDownloadURL()
                     .then(url=>{
                         // post image and caption to inside db
                         db.collection("posts").add({
@@ -49,15 +51,20 @@ function ImageUpload({username}){
                 }
 
         )
+            }else{
+                alert("image and caption is required")
+            }
     }
 
+   
 
     return(
         <div className="image-upload">
+            <h3 className="image-upload-progress-title">Add a photo</h3>
+            <input className="image-upload-text" type="text" placeholder="Enter a caption..." onChange={(event)=>setCaption(event.target.value)} value={caption}/>
+            <input className="image-upload-file"type="file" onChange={handleChange} />
             <progress className="image-upload-progress" value={progress} max='100'/>
-            <input type="text" placeholder="Enter a caption..." onChange={(event)=>setCaption(event.target.value)} value={caption} />
-            <input type="file" onChange={handleChange} />
-            <button onClick={handleUpload}>Upload</button>
+            <button className="image-upload-button" onClick={handleUpload}>Upload</button>
         </div>
     )
 
