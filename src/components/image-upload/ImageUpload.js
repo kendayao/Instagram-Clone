@@ -2,9 +2,10 @@ import React, {useState} from 'react'
 import firebase from 'firebase';
 import {storage, db} from '../../firebase/firebase'
 import './ImageUpload.css'
+import {setPhotoModal} from '../../redux/photoModal/photoModal.action'
+import{connect} from 'react-redux'
 
-
-function ImageUpload({username}){
+function ImageUpload({username, setPhotoModal}){
     const [image, setImage]=useState(null)
     const [progress, setProgress]=useState(0)
     const [caption, setCaption]=useState('')
@@ -46,7 +47,7 @@ function ImageUpload({username}){
                         setProgress(0);
                         setCaption('');
                         setImage(null);
-                        
+                        setPhotoModal(false)
                     })
                 }
 
@@ -70,5 +71,9 @@ function ImageUpload({username}){
 
 }
 
+const mapDispatchToProps=dispatch=>({
+    setPhotoModal: status=>dispatch(setPhotoModal(status)),
+    
+  })
 
-export default ImageUpload
+export default connect(null, mapDispatchToProps)(ImageUpload)
