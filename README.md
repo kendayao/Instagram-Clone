@@ -2,7 +2,7 @@
 
 ## Description
 
-This application is a replica of the popular steaming service, Netflix. Built using React.js, redux and react hooks to manage state, and firebase for web hosting.
+This application is a replica of the popular social media platform, Instagram. It is built using React.js, Material UI for styling, redux and react hooks to manage state, and firebase for data storage and web hosting.
 
 ## Table of Contents
 
@@ -23,8 +23,7 @@ This application is a replica of the popular steaming service, Netflix. Built us
 - Firebase
 - React Hooks
 - Redux
-- TMDB API
-- React Youtube
+- Material UI
 - CSS
 - HTML
 
@@ -36,7 +35,11 @@ No installation needed.
 
 ## Usage
 
-The deployed link will take you to the homepage. On the homepage, the banner will display a netflix original. Click on play trailer to play a trailer or click on add to my list to add the movie to the My List row. Scroll up, down, left, and right to display more movies.
+The deployed link will take you to the homepage. On the homepage, click on sign up to create and account or sign in to log in an existing account. You can log using the test credential below. Once logged in, you can click on the heart icon to like a photo, input on the comment field to comment on a photo, and click on the add photo button from the top dropdown menu to add your own photo.
+
+Test Credentials:
+email: cool_coder@email.com
+password: 12341234
 
 ## License
 
