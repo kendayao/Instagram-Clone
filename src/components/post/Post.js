@@ -1,4 +1,4 @@
-//react imports
+// react and componenets imports
 import React, { useEffect, useState } from 'react';
 import './Post.css';
 //material UI imports

@@ -145,6 +145,7 @@ function App({modalStatus, setPhotoModal }) {
                 required
               />
               <button className="app__modal-button" type="submit" onClick={signUp}>Sign Up</button>
+              <p className="app__modal-text">Already have an account?<span className="app__modal-link" onClick={()=>{setOpenSignIn(true);setOpen(false)}}> Sign in</span></p>
            </form>
          </div>
       </Modal>
@@ -180,7 +181,9 @@ function App({modalStatus, setPhotoModal }) {
                 required
               />
               <button className="app__modal-button" type="submit" onClick={signIn}>Sign In</button>
+              <p className="app__modal-text">Don't have an account?<span className="app__modal-link" onClick={()=>{setOpenSignIn(false);setOpen(true)}}> Sign up</span></p>
            </form>
+
          </div>
       </Modal>
 

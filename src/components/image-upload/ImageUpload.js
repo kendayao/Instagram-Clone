@@ -1,7 +1,10 @@
+// react and componenets imports
 import React, {useState} from 'react'
+import './ImageUpload.css'
+// firebase imports
 import firebase from 'firebase';
 import {storage, db} from '../../firebase/firebase'
-import './ImageUpload.css'
+//redux imports
 import {setPhotoModal} from '../../redux/photoModal/photoModal.action'
 import{connect} from 'react-redux'
 
@@ -10,13 +13,14 @@ function ImageUpload({username, setPhotoModal}){
     const [progress, setProgress]=useState(0)
     const [caption, setCaption]=useState('')
 
+// sets image to the file chosen
     const handleChange=event=>{
         if(event.target.files[0]){
             setImage(event.target.files[0])
         }
     }
 
-    
+//handle upload, sets progress download indicator, get image url and store url and caption to firestore
     const handleUpload=()=>{
         if(image && caption){
         const uploadTask=storage.ref(`images/${image?.name}`).put(image)
@@ -50,14 +54,11 @@ function ImageUpload({username, setPhotoModal}){
                         setPhotoModal(false)
                     })
                 }
-
         )
             }else{
                 alert("An image and a caption is required")
             }
     }
-
-   
 
     return(
         <div className="image-upload">
@@ -67,13 +68,12 @@ function ImageUpload({username, setPhotoModal}){
             <progress className="image-upload-progress" value={progress} max='100'/>
             <button className="image-upload-button" onClick={handleUpload}>Upload</button>
         </div>
-    )
+        )
 
 }
 
 const mapDispatchToProps=dispatch=>({
-    setPhotoModal: status=>dispatch(setPhotoModal(status)),
-    
+    setPhotoModal: status=>dispatch(setPhotoModal(status)), 
   })
 
 export default connect(null, mapDispatchToProps)(ImageUpload)

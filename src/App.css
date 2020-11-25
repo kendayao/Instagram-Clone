@@ -73,6 +73,19 @@
   border: none;
 }
 
+.app__modal-text {
+  color: #262626;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.app__modal-link {
+  cursor: pointer;
+  color: #0095f6;
+  font-weight: 600;
+}
+
 .app__posts {
   max-width: 40%;
   padding-top: 45px;
