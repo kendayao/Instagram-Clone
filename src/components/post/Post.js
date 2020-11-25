@@ -116,7 +116,7 @@ function Post({username, user, postId, caption, imageUrl}){
                             return <div key={likeItem.likeUser} className="post__modal-body-item" >
                             <Avatar 
                             className="post__avatar-modal"
-                            alt={likeItem.likeUser.toUpperCase()}
+                            alt={likeItem.likeUser}
                             src="/static/images/avatar/1.jpg"
                             />
                             <p className="post__modal-body-name">{likeItem.likeUser}</p></div>
@@ -128,7 +128,7 @@ function Post({username, user, postId, caption, imageUrl}){
             <div className="post__header">
                 <Avatar 
                     className="post__avatar"
-                    alt={username.toUpperCase()}
+                    alt={username}
                     src="/static/images/avatar/1.jpg"
                 />
                 <h3>{username}</h3>

@@ -60,7 +60,7 @@ function App({modalStatus, setPhotoModal }) {
         setUser(authUser);
       }else{
         // user has logged out
-        setUser(null);
+        setUser('');
       }
     })
     return()=>{
@@ -79,10 +79,10 @@ function App({modalStatus, setPhotoModal }) {
   },[])
 
 //update display name when signing up
-  function signUp(event){
+  const signUp=async event=>{
     event.preventDefault();
-    auth.createUserWithEmailAndPassword(email, password)
-    .then((authUser)=>{
+     auth.createUserWithEmailAndPassword(email, password)
+    .then(authUser =>{
       return authUser.user.updateProfile({
         displayName:username,
       })
@@ -102,7 +102,7 @@ function App({modalStatus, setPhotoModal }) {
     setPassword('')
     setOpenSignIn(false)
   }
-  
+
   return (
     <div className="app">
 
@@ -205,7 +205,7 @@ function App({modalStatus, setPhotoModal }) {
         {user?<Avatar 
               onClick={()=>setDropdown(!dropdown)}
               className="post__avatar"
-              alt={user.displayName.toUpperCase()}
+              alt={user.displayName}
               src="/static/images/avatar/1.jpg"
               />:
         <div className="app__loginContainer">
@@ -215,7 +215,7 @@ function App({modalStatus, setPhotoModal }) {
         {dropdown? 
           <div className="dropdown">
             <p className="dropdown__header">{user.displayName}</p>
-            <div className="dropdown__body" onClick={()=>{setPhotoModal(true); setDropdown(false);}}><i class="far fa-plus-square"></i> Add Photo</div>
+            <div className="dropdown__body" onClick={()=>{setPhotoModal(true); setDropdown(false);}}><i className="far fa-plus-square"></i> Add Photo</div>
             <div className="dropdown__footer">
                 <Button onClick={()=>{auth.signOut(); setDropdown(false);}}>LogOut</Button>
             </div>
