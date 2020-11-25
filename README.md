@@ -2,7 +2,7 @@
 
 ## Description
 
-This application is a replica of the popular social media platform, Instagram. It is built using React.js, Material UI for styling, redux and react hooks to manage state, and firebase for data storage and web hosting.
+This application is a replica of the popular social media platform, Instagram. It is built using React.js, Material UI for styling, redux and react hooks to manage state, and firebase for data storage and web hosting. Users are able to sign up, post photos, write comments, and like individual posts.
 
 ## Table of Contents
 
