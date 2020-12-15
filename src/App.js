@@ -180,6 +180,8 @@ function App({modalStatus, setPhotoModal }) {
                 onChange={event=>setPassword(event.target.value)}
                 required
               />
+              <p className='app__login-p'>*You may use the following test credentials to login or click on signup to create your own*</p>
+              <p className='app__login-p'>email: cool_coder@email.com password: 12341234</p>
               <button className="app__modal-button" type="submit" onClick={signIn}>Sign In</button>
               <p className="app__modal-text">Don't have an account?<span className="app__modal-link" onClick={()=>{setOpenSignIn(false);setOpen(true)}}> Sign up</span></p>
            </form>
