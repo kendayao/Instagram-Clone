@@ -64,4 +64,6 @@ For any questions, please contact kendayao at kendayao@gmail.com
 
 Deployed application link: https://instagram-clone-bf736.web.app/
 
+Video demo link: https://giphy.com/gifs/elyXzLN5eKt38UE67X/fullscreen
+
 <img src="public/instagram-clone.png" width="600" height="450">
