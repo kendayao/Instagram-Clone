@@ -138,6 +138,11 @@
   cursor: pointer;
 }
 
+.post__avatar:hover {
+  cursor: pointer;
+}
+
+
 @media only screen and (max-width: 768px) {
   .app__posts {
     max-width: 90%;
