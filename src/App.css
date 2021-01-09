@@ -134,6 +134,10 @@
   color: rgba(var(--f52, 142, 142, 142), 1);
 }
 
+.post__avatar{
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 768px) {
   .app__posts {
     max-width: 90%;
