@@ -45,6 +45,12 @@
   margin-bottom: 5px;
 }
 
+.post_allComments{
+  color: rgba(var(--f52,142,142,142),1);
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .post__form {
   display: flex;
   margin-top: 10px;
@@ -95,9 +101,9 @@
 }
 
 .post__modal-body {
-  padding-left: 25px;
-  padding-bottom: 25px;
+  padding: 25px;
 }
+
 
 .post__modal-body-item {
   display: flex;
@@ -113,4 +119,13 @@
   width: 100%;
   text-align: center;
   padding: 15px;
+  position: relative;
+}
+
+
+.post__modal-closeIcon{
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }

@@ -5,6 +5,7 @@ import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 //firebase imports
 import {db} from '../../firebase/firebase';
 import firebase from 'firebase';
@@ -23,6 +24,8 @@ function getModalStyle() {
     paper: {
       position: 'absolute',
       width: 350,
+      maxHeight: 500,
+      overflow:'scroll',
       backgroundColor: theme.palette.background.paper,
       border: '1px solid #dbdbdb',
       borderRadius: '8px',
@@ -32,13 +35,14 @@ function getModalStyle() {
   }));
 
 
-function Post({username, user, postId, caption, imageUrl}){
+function Post({username, timestamp, user, postId, caption, imageUrl}){
     const [modalStyle] = React.useState(getModalStyle);
     const classes=useStyles();
     const [comments, setComments]=useState([])
     const [comment, setComment]=useState('')
     const [likes, setLikes]=useState([])
     const [openLikesModal, setOpenLikesModal]=useState(false)
+    const [openCommentsModal, setOpenCommentsModal]=useState(false)
    
     useEffect(()=>{
         let unsubscribe;
@@ -109,6 +113,7 @@ function Post({username, user, postId, caption, imageUrl}){
             >
                 <div style={modalStyle} className={classes.paper}>
                     <div className="post__modal-header">
+                        <CloseIcon style={{ fontSize: 14 }} onClick={()=>setOpenLikesModal(false)} className='post__modal-closeIcon' />
                         <h3>Likes</h3>
                     </div>
                     <div className="post__modal-body">
@@ -125,6 +130,26 @@ function Post({username, user, postId, caption, imageUrl}){
                 </div>
             </Modal>
 
+            <Modal
+                open={openCommentsModal}
+                onClose={()=>setOpenCommentsModal(false)}
+            >
+                <div style={modalStyle} className={classes.paper}>
+                    <div className="post__modal-header">
+                        <CloseIcon  style={{ fontSize: 14 }} onClick={()=>setOpenCommentsModal(false)} className='post__modal-closeIcon'/>
+                        <h3>Comments</h3>
+                    </div>
+                    <div className="post__modal-body">
+                    {comments.map(commentItem=>(
+                        <p key={commentItem.timestamp} className='post__comments-comment'>
+                        <strong>{commentItem.username}</strong> {commentItem.text}
+                        </p>
+                    ))}
+                    </div>
+                </div>
+            </Modal>
+
+
             <div className="post__header">
                 <Avatar 
                     className="post__avatar"
@@ -140,11 +165,12 @@ function Post({username, user, postId, caption, imageUrl}){
             }
             <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
             <div className="post__comments">
-                {comments.map(commentItem=>(
+                {comments.filter((commentItem, index)=>(index<2)).map(commentItem=>(
                 <p key={commentItem.timestamp} className='post__comments-comment'>
                     <strong>{commentItem.username}</strong> {commentItem.text}
                 </p>
                 ))}
+                {!user? <p className="post_allComments">Sign in to view all comments</p>: comments.length>2?<p className="post_allComments" onClick={()=>setOpenCommentsModal(true)}>View all {comments.length} comments</p>: null}
             </div>
 
             {user&& 
