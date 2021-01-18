@@ -36,6 +36,10 @@
   color: rgb(255, 60, 93);
 }
 
+.post__signed-in-icon{
+  cursor: pointer;
+}
+
 .post__comments {
   padding-left: 20px;
   padding-bottom: 20px;

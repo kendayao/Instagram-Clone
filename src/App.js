@@ -226,7 +226,7 @@ function App({modalStatus, setPhotoModal }) {
 
       <div className="app__posts">
         {posts.map(({id, post})=>(
-          <Post key={post.timestamp} is user={user} postId={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+          <Post key={post.timestamp} openSignIn={()=>setOpenSignIn(true)} user={user} postId={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
         ))}
       </div>
 

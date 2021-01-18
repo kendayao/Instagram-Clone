@@ -35,7 +35,7 @@ function getModalStyle() {
   }));
 
 
-function Post({username, timestamp, user, postId, caption, imageUrl}){
+function Post({username, timestamp, openSignIn, user, postId, caption, imageUrl}){
     const [modalStyle] = React.useState(getModalStyle);
     const classes=useStyles();
     const [comments, setComments]=useState([])
@@ -160,7 +160,7 @@ function Post({username, timestamp, user, postId, caption, imageUrl}){
             </div>
             <img className="post__image" src={imageUrl} alt="post display" />
             {user?
-            <div className="post__likes"><i onClick={(likes.some(like=>like['likeUser']===user.displayName))?handleUnlike:handleLike}  className={likes.some(like=>like['likeUser']===user.displayName)? "fas fa-heart fa-lg":"far fa-heart fa-lg" } ></i> {likes.length>=1? <p className="post__like-text">liked by <strong>{likes[0].likeUser}</strong> and <strong onClick={()=>setOpenLikesModal(true)} className="post___like-click">{likeCount} others</strong></p> : likes.length+" likes" }</div>:
+            <div className="post__likes"><i onClick={(likes.some(like=>like['likeUser']===user.displayName))?handleUnlike:handleLike}  className={likes.some(like=>like['likeUser']===user.displayName)? "fas fa-heart post__signed-in-icon fa-lg":"far post__signed-in-icon fa-heart fa-lg" } ></i> {likes.length>=1? <p className="post__like-text">liked by <strong>{likes[0].likeUser}</strong> and <strong onClick={()=>setOpenLikesModal(true)} className="post___like-click">{likeCount} others</strong></p> : likes.length+" likes" }</div>:
             <div className="post__likes"><i className="far fa-heart fa-lg"></i> {likes.length} likes</div>
             }
             <h4 className="post__text"><strong>{username}</strong> {caption}</h4>
@@ -170,7 +170,7 @@ function Post({username, timestamp, user, postId, caption, imageUrl}){
                     <strong>{commentItem.username}</strong> {commentItem.text}
                 </p>
                 ))}
-                {!user? <p className="post_allComments">Sign in to view all comments</p>: comments.length>2?<p className="post_allComments" onClick={()=>setOpenCommentsModal(true)}>View all {comments.length} comments</p>: null}
+                {!user? <p className="post_allComments" onClick={openSignIn}>Sign in to view all comments</p>: comments.length>2?<p className="post_allComments" onClick={()=>setOpenCommentsModal(true)}>View all {comments.length} comments</p>: null}
             </div>
 
             {user&& 
